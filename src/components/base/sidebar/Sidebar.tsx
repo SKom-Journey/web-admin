@@ -12,25 +12,25 @@ const data = {
    navbar: [
       {
          title: "Manage QR",
-         url: "",
+         url: "manage-qr",
          icon: QrCode,
          isActive: false,
       },
       {
          title: "Incoming Order",
-         url: "#",
+         url: "incoming-order",
          icon: Soup,
          isActive: false,
       },
       {
          title: "Manage Category",
-         url: "#",
+         url: "manage-category",
          icon: ChartBarStacked,
          isActive: false,
       },
       {
          title: "Manage Menu",
-         url: "#",
+         url: "manage-menu",
          icon: HandPlatter,
          isActive: false,
       },
@@ -39,7 +39,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
    return (
-      <Sidebar collapsible="icon" {...props}>
+      <Sidebar className="!bg-white" collapsible="icon" {...props}>
          <SidebarHeader>
             <SidebarHears />
          </SidebarHeader>
