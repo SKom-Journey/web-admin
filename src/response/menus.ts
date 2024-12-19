@@ -1,4 +1,4 @@
-export interface MenusEntity {
+export interface MenusResponse {
    description: string;
    id: string;
    img: string;

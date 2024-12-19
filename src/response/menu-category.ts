@@ -1,4 +1,4 @@
-export interface MenuCategoryEntity {
+export interface MenuCategoryResponse {
    id: string;
    menu_id: string;
    category_id: string;
