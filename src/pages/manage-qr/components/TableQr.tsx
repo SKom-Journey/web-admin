@@ -8,8 +8,15 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Printer, Trash2 } from "lucide-react";
+import { QrResponse } from "@/response/qr";
 
-export const TableQr = ({ data }) => {
+interface TableQrProps {
+   data: QrResponse[];
+   onPrint: (id: string) => void;
+   onDelete: (id: string) => void;
+}
+
+export const TableQr: React.FC<TableQrProps> = ({ data, onPrint, onDelete }) => {
    return (
       <Table>
          <TableHeader>
@@ -27,13 +34,13 @@ export const TableQr = ({ data }) => {
                   <TableCell className="text-right">
                      <Button
                         className="bg-transparent hover:bg-green-100 p-2 shadow-none"
-                        onClick={() => console.log(`Printing QR for table ${qr.table_number}`)}
+                        onClick={() => onPrint(qr.table_number)}
                      >
                         <Printer className="text-green-600" />
                      </Button>
                      <Button
                         className="bg-transparent hover:bg-red-100 p-2 shadow-none"
-                        onClick={() => console.log(`Deleting QR for table ${qr.table_number}`)}
+                        onClick={() => onDelete(qr.table_number)}
                      >
                         <Trash2 className="text-red-600" />
                      </Button>
