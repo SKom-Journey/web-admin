@@ -13,5 +13,5 @@ export const useGetQrId = (table_number: string) => {
 
 const getQrIdData = async (table_number: string): Promise<Response<QrResponse>> => {
    const data = await getQrId(table_number)
-   return data;
+   return data as Response<QrResponse>;
 }
