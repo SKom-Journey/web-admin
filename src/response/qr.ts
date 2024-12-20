@@ -1,5 +1,4 @@
-export interface QrEntity {
+export interface QrResponse {
    id: string;
-   is_enabled: boolean;
    table_number: string;
 }
