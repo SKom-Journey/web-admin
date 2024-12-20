@@ -8,37 +8,33 @@ import {
 } from "@/components/ui/card"
 import RyomuLogo from "@/assets/logo/ryomu-logo.png"
 
-export const CardItems = () => {
+interface CardItemsProps {
+   id: string;
+   name: string;
+   note: string;
+   img: string;
+   total: number;
+   price: number
+}
+
+export const CardItems: React.FC<CardItemsProps> = ({ id, name, note, img, total, price }) => {
    return (
       <Card>
          <CardHeader>
             <CardTitle>All Items</CardTitle>
          </CardHeader>
          <CardContent className="divide-y divide-slate-100 px-6">
-            <div className="flex items-center justify-between py-2">
+            <div className="flex items-center justify-between py-2" key={id}>
                <div className="flex items-center gap-3">
-                  <img src={RyomuLogo} alt="" className="rounded-full w-10" />
+                  <img src={img || RyomuLogo} alt="" className="rounded-full w-10" />
                   <div>
-                     <CardTitle className="text-gray-700 font-medium">Items Name</CardTitle>
-                     <CardDescription className="text-gray-600 text-xs">Note: -</CardDescription>
+                     <CardTitle className="text-gray-700 font-medium">{name}</CardTitle>
+                     <CardDescription className="text-gray-600 text-xs">Note: {note}</CardDescription>
                   </div>
                </div>
                <div className="flex items-center gap-5">
-                  <p className="text-gray-500 text-xs">1x</p>
-                  <p className="text-green-500 font-medium">Rp 10000</p>
-               </div>
-            </div>
-            <div className="flex items-center justify-between py-2">
-               <div className="flex items-center gap-3">
-                  <img src={RyomuLogo} alt="" className="rounded-full w-10" />
-                  <div>
-                     <CardTitle className="text-gray-700 font-medium">Items Name</CardTitle>
-                     <CardDescription className="text-gray-600 text-xs">Note: -</CardDescription>
-                  </div>
-               </div>
-               <div className="flex items-center gap-5">
-                  <p className="text-gray-500 text-xs">1x</p>
-                  <p className="text-green-500 font-medium">Rp 10000</p>
+                  <p className="text-gray-500 text-xs">{total}x</p>
+                  <p className="text-green-500 font-medium">Rp {price}</p>
                </div>
             </div>
          </CardContent>
