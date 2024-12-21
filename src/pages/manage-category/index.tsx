@@ -10,6 +10,8 @@ import { CategoryRequest, UpdateCategoryRequest } from "@/request/category";
 import { useDeleteCategory } from "@/usecase/manage-category/use-delete-category";
 import { FormEvent } from "react";
 import { useUpdateCategory } from "@/usecase/manage-category/use-update-category";
+import { MenuCategory } from "./components/MenuCategory";
+import { useGetMenuCategories } from "@/usecase/manage-category/use-get-menu-categories";
 
 export function ManageCategoryPage() {
    const { data, isLoading, isError, refetch } = useGetCategories();
@@ -21,6 +23,8 @@ export function ManageCategoryPage() {
          editedCategoryName,
          setEditedCategoryName,
          editSelectedCategoryId,
+         selectedCategoryId,
+         setSelectedCategoryId,
          setEditSelectedCategoryId
       } = useCategoryStore(state => state);
 
@@ -113,7 +117,9 @@ export function ManageCategoryPage() {
          </form>
       )}
       <div className="bg-white p-4 shadow rounded-lg">
-         <TableCategory setEditedCategoryName={setEditedCategoryName} editSelectedCategoryId={editSelectedCategoryId} setEditSelectedCategoryId={setEditSelectedCategoryId} onUpdate={handleUpdate} data={data ?? []} onDelete={handleDelete} />
+         <TableCategory setSelectedCategoryId={setSelectedCategoryId} setEditedCategoryName={setEditedCategoryName} editSelectedCategoryId={editSelectedCategoryId} setEditSelectedCategoryId={setEditSelectedCategoryId} onUpdate={handleUpdate} data={data ?? []} onDelete={handleDelete} />
       </div>
+
+      <MenuCategory categoryId={selectedCategoryId} onClose={() => setSelectedCategoryId(null)} open={selectedCategoryId != null} />
    </>
 }
