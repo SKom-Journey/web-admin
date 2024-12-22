@@ -5,12 +5,30 @@ import { Check, X } from "lucide-react";
 
 interface InputFieldMenusProps {
    onSubmit: () => void;
+   onUpdate: () => void;
 }
 
-export const InputFieldMenus = ({ onSubmit }: InputFieldMenusProps) => {
-   const { title, img, price, description, setTitle, setImg, setPrice, setDescription, toggleShowField } = useMenuStore(state => state);
+export const InputFieldMenus = ({ onSubmit, onUpdate }: InputFieldMenusProps) => {
+   const {
+      title,
+      img,
+      price,
+      description,
+      editMenu,
+      setTitle,
+      setImg,
+      setPrice,
+      setDescription,
+      toggleShowField,
+      clearEditMenu,
+      resetForm
+   } = useMenuStore((state) => state);
+
+   const isEditMode = Boolean(editMenu);
 
    const handleCancel = () => {
+      clearEditMenu();
+      resetForm();
       toggleShowField();
    };
 
@@ -46,7 +64,10 @@ export const InputFieldMenus = ({ onSubmit }: InputFieldMenusProps) => {
                />
             </div>
             <div className="flex gap-1">
-               <Button className="bg-green-500 hover:bg-green-600 w-full" onClick={onSubmit}>
+               <Button
+                  className="bg-green-500 hover:bg-green-600 w-full"
+                  onClick={isEditMode ? onUpdate : onSubmit}
+               >
                   <Check />
                </Button>
                <Button className="bg-primary hover:bg-red-700 w-full" onClick={handleCancel}>

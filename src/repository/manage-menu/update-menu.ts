@@ -4,10 +4,10 @@ import { MenusRequest } from "@/request/menu";
 import { MENU } from "@/api/menus";
 import { MenusResponse } from "@/response/menus";
 
-export const createMenu = async (payload: MenusRequest): Promise<MenusRequest> => {
+export const updateMenu = async (payload: MenusRequest, menu_id: string): Promise<MenusRequest> => {
    try {
-      const res = await Http.post<Response<MenusResponse>>(
-         MENU.CreateMenu(), 
+      const res = await Http.put<Response<MenusResponse>>(
+         MENU.UpdateMenu(menu_id), 
          payload,
          {
             headers: {

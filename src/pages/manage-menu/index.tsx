@@ -9,13 +9,26 @@ import { useCreateMenu } from "@/usecase/manage-menu/use-create-menu";
 import { MenusRequest } from "@/request/menu";
 import { InputFieldMenus } from "./components/InputFieldMenu";
 import { useMenuStore } from "@/store/menu-store ";
+import { useUpdateMenu } from "@/usecase/manage-menu/use-update-menu";
 
 export function ManageMenuPage() {
    const { data, isLoading, isError, refetch } = useGetMenus();
-   const { showField, toggleShowField, title, img, price, description, resetForm } = useMenuStore(state => state);
+   const {
+      showField,
+      title,
+      img,
+      price,
+      editMenu,
+      description,
+      toggleShowField,
+      resetForm,
+      setEditMenu,
+      clearEditMenu
+   } = useMenuStore(state => state);
 
    const { mutate: deleteMenu } = useDeleteMenu();
    const { mutate: createMenu } = useCreateMenu();
+   const { mutate: updateMenu } = useUpdateMenu(editMenu?.id || "");
 
    if (isLoading) return <LoaderComponent />;
    if (isError) return <p>Error fetching Menu data.</p>;
@@ -47,6 +60,38 @@ export function ManageMenuPage() {
       }
    };
 
+   const handleUpdate = () => {
+      if (title && img && price && description) {
+         const payload: MenusRequest = {
+            title,
+            img,
+            price: Number(price),
+            description,
+         };
+
+         updateMenu(payload, {
+            onSuccess: () => {
+               toast.success("Success to update Menu");
+               refetch();
+               clearEditMenu();
+               toggleShowField();
+            },
+            onError: (error) => {
+               toast.error("Failed to update Menu");
+               console.error("Failed to update Menu:", error);
+            },
+         });
+      } else {
+         toast.error("All fields are required");
+         console.error("All fields are required.");
+      }
+   };
+
+   const handleEdit = (menu) => {
+      toggleShowField();
+      setEditMenu(menu);
+   };
+
    const handleDelete = (id: string) => {
       deleteMenu(id, {
          onSuccess: () => {
@@ -69,12 +114,13 @@ export function ManageMenuPage() {
             </Button>
          </div>
          {showField && (
-            <InputFieldMenus onSubmit={handleCreate} />
+            <InputFieldMenus onSubmit={handleCreate} onUpdate={handleUpdate} />
          )}
          <div className="bg-white p-4 shadow rounded-lg">
             <TableMenu
                data={data ?? []}
                onDelete={handleDelete}
+               onEdit={handleEdit}
             />
          </div>
       </>
