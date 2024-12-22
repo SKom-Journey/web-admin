@@ -1,4 +1,5 @@
 import Dashboard from "@/Dashboard";
+import { LoginPage } from "@/pages/auth/login";
 import { IncomingOrderPage } from "@/pages/incoming-order";
 import { ManageCategoryPage } from "@/pages/manage-category";
 import { ManageMenuPage } from "@/pages/manage-menu";
@@ -10,6 +11,10 @@ const router = createBrowserRouter([
    {
       path: '/',
       element: <Navigate to='/admin/manage-qr' />,
+   },
+   {
+      path: '/auth/login',
+      element: <LoginPage />,
    },
    {
       path: '/admin',
