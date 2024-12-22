@@ -22,7 +22,7 @@ export const createQr = async (payload: QrRequest): Promise<QrRequest> => {
 
       return data;
    } catch (error) {
-      console.error('Claim Error:', error);
+      console.error('Error:', error);
       throw error;
    }
 };
