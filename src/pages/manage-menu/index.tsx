@@ -1,5 +1,9 @@
+import { TableMenu } from "./components/TableMenu";
+
 export function ManageMenuPage() {
    return (
-      <h1>Manage Menu Page</h1>
+      <div className="bg-white p-4 shadow rounded-lg">
+         <TableMenu />
+      </div>
    )
 }
