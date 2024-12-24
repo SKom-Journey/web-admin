@@ -5,12 +5,12 @@ import { MenusResponse } from "@/response/menus";
 export const useGetMenuCategories = (categoryId: string) => {
    return useQuery<MenusResponse[]>({
       queryKey: ['get-menu-categories', categoryId],
-      queryFn: () => getCategoriesData(categoryId),
+      queryFn: () => getMenuCategoriesData(categoryId),
       retry: 1
   });
 }
 
-const getCategoriesData = async (categoryId: string): Promise<MenusResponse[]> => {
+const getMenuCategoriesData = async (categoryId: string): Promise<MenusResponse[]> => {
    const data = await getMenuCategories(categoryId)
    return data;
 }
