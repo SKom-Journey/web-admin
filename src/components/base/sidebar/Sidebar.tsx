@@ -1,4 +1,4 @@
-import { QrCode, HandPlatter, ChartBarStacked, Soup } from "lucide-react"
+import { QrCode, HandPlatter, ChartBarStacked, Soup, LogOut } from "lucide-react"
 import { SidebarItem } from "@/components/base/sidebar/SidebarItem"
 import { SidebarHeader as SidebarHears } from "@/components/base/sidebar/SidebarHeader"
 import {
@@ -9,17 +9,11 @@ import {
 } from "@/components/ui/sidebar"
 
 const data = {
-   navbar: [
+   manage: [
       {
          title: "Manage QR",
          url: "manage-qr",
          icon: QrCode,
-         isActive: false,
-      },
-      {
-         title: "Incoming Order",
-         url: "incoming-order",
-         icon: Soup,
          isActive: false,
       },
       {
@@ -35,6 +29,22 @@ const data = {
          isActive: false,
       },
    ],
+   order: [
+      {
+         title: "Incoming Order",
+         url: "incoming-order",
+         icon: Soup,
+         isActive: false,
+      },
+   ],
+   auth: [
+      {
+         title: "Logout",
+         url: "/auth/logout",
+         icon: LogOut,
+         isActive: false,
+      },
+   ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -44,7 +54,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarHears />
          </SidebarHeader>
          <SidebarContent>
-            <SidebarItem items={data.navbar} />
+            <SidebarItem items={data.manage} title="Manage" />
+            <SidebarItem items={data.order} title="Orders" />
+            <hr />
+            <SidebarItem items={data.auth} title="Other" />
          </SidebarContent>
          <SidebarRail />
       </Sidebar>

@@ -82,6 +82,7 @@ export function ManageQrPage() {
          {showField && (
             <div className="bg-white mb-3 flex gap-2">
                <Input
+                  autoFocus
                   placeholder="Input Number of Table"
                   className="focus-visible:ring-none"
                   value={tableNumber}
