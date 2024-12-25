@@ -67,7 +67,7 @@ export const MenuCategoryEditor: React.FC<MenuCategoryEditorProps> = ({ category
                             {(menu || []).map((m, i) => (
                                 <div key={i} className="bg-white p-2 border flex items-center w-full">
                                     <div>
-                                        <img draggable={false} src={m.img} className="w-10 h-10 rounded-lg" alt="" />
+                                        <img draggable={false} src={m.img} className="w-10 h-10 rounded-lg object-cover" alt="" />
                                     </div>
                                     <div className="font-semibold px-3 truncate w-0 flex-grow text-left">{m.title}</div>
                                     <div>
@@ -85,7 +85,7 @@ export const MenuCategoryEditor: React.FC<MenuCategoryEditorProps> = ({ category
                             {(outsideMenu || []).map((m, i) => (
                                 <div key={i} className="bg-white p-2 border flex items-center w-full">
                                     <div>
-                                        <img draggable={false} src={m.img} className="w-10 h-10 rounded-lg" alt="" />
+                                        <img draggable={false} src={m.img} className="w-10 h-10 rounded-lg object-cover" alt="" />
                                     </div>
                                     <div className="font-semibold px-3 truncate w-0 flex-grow text-left">{m.title}</div>
                                     <div>

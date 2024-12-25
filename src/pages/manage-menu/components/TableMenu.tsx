@@ -33,7 +33,7 @@ export const TableMenu: React.FC<TableMenuProps> = ({ data, onDelete, onEdit }) 
             {data?.map((menu, index) => (
                <TableRow key={index}>
                   <TableCell className="font-medium">{index + 1}</TableCell>
-                  <TableCell><img src={menu.img || ""} alt={menu.title} className="w-16" /></TableCell>
+                  <TableCell><img src={menu.img || ""} alt={menu.title} className="w-16 h-16 object-cover rounded-lg" /></TableCell>
                   <TableCell>{menu.title}</TableCell>
                   <TableCell>Rp {menu.price}</TableCell>
                   <TableCell>{menu.description}</TableCell>
