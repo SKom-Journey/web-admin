@@ -6,8 +6,8 @@ import {
     TableHeader,
     TableRow,
  } from "@/components/ui/table";
- import { Button } from "@/components/ui/button";
- import { Check, Edit2, Trash2, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Check, Edit2, Trash2, X } from "lucide-react";
 import { CategoryResponse } from "@/response/category";
 import { Input } from "@/components/ui/input";
 import { FormEvent } from "react";
@@ -17,11 +17,12 @@ import { FormEvent } from "react";
     onDelete: (id: string) => void;
     onUpdate: (e: FormEvent<HTMLFormElement>) => void;
     editSelectedCategoryId: string | null;
+    setSelectedCategoryId: (id: string) => void;
     setEditedCategoryName: (id: string) => void;
     setEditSelectedCategoryId: (id: string | null) => void;
  }
  
- export const TableCategory: React.FC<TableCategoryProps> = ({ data, onDelete, onUpdate, setEditSelectedCategoryId, editSelectedCategoryId, setEditedCategoryName }) => {
+ export const TableCategory: React.FC<TableCategoryProps> = ({ data, onDelete, onUpdate, setEditSelectedCategoryId, editSelectedCategoryId, setEditedCategoryName, setSelectedCategoryId }) => {
     return (
        <Table>
           <TableHeader>
@@ -74,7 +75,11 @@ import { FormEvent } from "react";
                   {
                      editSelectedCategoryId != category.id && <>
                         <TableCell>{category.name}</TableCell>
-                        <TableCell>{category.total_menu}</TableCell>
+                        <TableCell>
+                           <a href="#" className="underline text-blue-400" onClick={() => setSelectedCategoryId(category.id)}>
+                              {category.total_menu}
+                           </a>
+                        </TableCell>
                         <TableCell className="text-right">
                            <Button
                               className="bg-transparent hover:bg-red-100 p-2 shadow-none"

@@ -80,3 +80,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track-piece {
+  background: white
+}
+::-webkit-scrollbar-thumb {
+  background: gray
+}
