@@ -11,7 +11,6 @@ import { useDeleteCategory } from "@/usecase/manage-category/use-delete-category
 import { FormEvent } from "react";
 import { useUpdateCategory } from "@/usecase/manage-category/use-update-category";
 import { MenuCategoryEditor } from "./components/MenuCategoryEditor";
-import { useGetMenuCategories } from "@/usecase/manage-category/use-get-menu-categories";
 
 export function ManageCategoryPage() {
    const { data, isLoading, isError, refetch } = useGetCategories();
@@ -121,7 +120,7 @@ export function ManageCategoryPage() {
       </div>
 
       {
-         selectedCategoryId != null && <MenuCategoryEditor categoryId={selectedCategoryId} onClose={() => setSelectedCategoryId(null)} open={selectedCategoryId != null} />
+         selectedCategoryId != null && <MenuCategoryEditor onEdited={refetch} categoryId={selectedCategoryId} onClose={() => setSelectedCategoryId(null)} open={selectedCategoryId != null} />
       }
    </>
 }

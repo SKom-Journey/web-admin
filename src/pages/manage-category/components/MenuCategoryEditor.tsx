@@ -1,87 +1,100 @@
 import { LoaderComponent } from "@/components/common/LoaderComponent";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { CreateMenuCategoryRequest, DeleteMenuCategoryRequest } from "@/request/menu-category";
+import { useCreateMenuCategory } from "@/usecase/manage-category/use-create-menu-category";
+import { useDeleteMenuCategory } from "@/usecase/manage-category/use-delete-menu-category";
 import { useGetMenuCategories } from "@/usecase/manage-category/use-get-menu-categories";
 import { useGetMenuOutsideCategories } from "@/usecase/manage-category/use-get-menu-outside-categories";
-import { useState } from "react";
-import Draggable from 'react-draggable';
+import { MinusCircle, PlusCircle } from "lucide-react";
+import toast from "react-hot-toast";
 
 interface MenuCategoryEditorProps {
     categoryId: string;
     open: boolean;
     onClose: () => void;
+    onEdited: () => void;
 }
  
-export const MenuCategoryEditor: React.FC<MenuCategoryEditorProps> = ({ categoryId, onClose, open }) => {
-   const { data: menu, isLoading: isMenuLoading, isError: isMenuError, refetch: menuRefetch } = useGetMenuCategories(categoryId);
-   const { data: outsideMenu, isLoading: isOutsideMenuLoading, isError: isOutsideMenuError, refetch: outsideMenuRefetch } = useGetMenuOutsideCategories(categoryId);
+export const MenuCategoryEditor: React.FC<MenuCategoryEditorProps> = ({ categoryId, onClose, open, onEdited }) => {
+    const { data: menu, isLoading: isMenuLoading, refetch: menuRefetch } = useGetMenuCategories(categoryId);
+    const { data: outsideMenu, isLoading: isOutsideMenuLoading, refetch: outsideMenuRefetch } = useGetMenuOutsideCategories(categoryId);
 
-   const [positions, setPositions] = useState(
-        outsideMenu?.map(() => ({ x: 0, y: 0 })) // Initialize positions for each item
-    );
+   const { mutate: createMenuCategory } = useCreateMenuCategory();
+   const { mutate: deleteMenuCategory } = useDeleteMenuCategory();
 
-    const handleStop = (e, data, index) => {
-        if(positions) {
-            // Reset the position to the original place
-            const updatedPositions = [...positions];
-            updatedPositions[index] = { x: 0, y: 0 }; // Reset position to {0, 0}
-            setPositions(updatedPositions);
-        }
-    };
+    async function addToCategory(menuId: string) {
+        const payload: CreateMenuCategoryRequest = { menu_id: menuId, category_id: categoryId };
+        createMenuCategory(payload, {
+            onSuccess: () => {
+               toast.success('Success to Create Menu Category');
+               menuRefetch();
+               outsideMenuRefetch();
+               onEdited();
+            },
+            onError: (error) => {
+               toast.error('Failed to create category')
+               console.error("Failed to create category:", error);
+            },
+        });
+    }
+    
+    async function removeFromCategory(menuId: string) {
+        const payload: DeleteMenuCategoryRequest = { menu_id: menuId, category_id: categoryId };
+        deleteMenuCategory(payload, {
+            onSuccess: () => {
+               toast.success('Success to Remove Menu From Category');
+               menuRefetch();
+               outsideMenuRefetch();
+               onEdited();
+            },
+            onError: (error) => {
+               toast.error('Failed to create category')
+               console.error("Failed to create category:", error);
+            },
+        });
+    }
 
-   if (categoryId == null) return <></>;
-
-   return (
+    return (
         <Dialog open={open} onOpenChange={onClose}>
-            <DialogContent className="text-center max-w-7xl">
-                <div className="flex w-full h-full relative z-0" style={{maxHeight: '75vh'}}>
-                    {
-                        isMenuLoading && <LoaderComponent />
-                    }
-                    {
-                        !isMenuLoading && 
-                            <div className="w-full h-full border-r-4 flex flex-col z-0 relative">
-                                <div className="w-full pb-2 border-b font-bold">
-                                    Added
+            <DialogContent aria-describedby="Menus" aria-description="Menus" className="text-center max-w-7xl">
+                <DialogTitle aria-describedby="Menu Category" aria-description="Menu Category" className="font-bold"></DialogTitle>
+                <div className="flex w-full h-full relative z-0" style={{ maxHeight: '75vh', overflow: 'visible' }}>
+                    <div className="w-full h-full border-r-4 flex flex-col z-0 relative">
+                        <div className="w-full pb-2 border-b font-bold">Added</div>
+                        <div className="w-full overflow-auto flex-grow relative z-0">
+                            {isMenuLoading && <center className="h-full w-full py-10"><LoaderComponent /></center>}
+                            {(menu || []).map((m, i) => (
+                                <div key={i} className="bg-white p-2 border flex items-center w-full">
+                                    <div>
+                                        <img draggable={false} src={m.img} className="w-10 h-10 rounded-lg" alt="" />
+                                    </div>
+                                    <div className="font-semibold px-3 truncate w-0 flex-grow text-left">{m.title}</div>
+                                    <div>
+                                        <Button onClick={() => removeFromCategory(m.id)} title="Remove From Category" className="hover:bg-black hover:text-white"><MinusCircle /></Button>
+                                    </div>
                                 </div>
-                                
-                                <div className="w-full overflow-auto flex-grow relative z-0">
-                                    {
-                                        (menu || []).map((m, i) => <div className="py-2 px-2 border cursor-pointer" draggable key={i}>{m.title}</div>)
-                                    }
+                            ))}
+                        </div>
+                    </div>
+                    
+                    <div className="w-full h-full flex flex-col relative z-0">
+                        <div className="w-full pb-2 border-b font-bold">Not Added</div>
+                        <div className="w-full overflow-y-auto overflow-x-hidden flex-grow relative z-0">
+                            {isOutsideMenuLoading && <center className="h-full w-full py-10"><LoaderComponent /></center>}
+                            {(outsideMenu || []).map((m, i) => (
+                                <div key={i} className="bg-white p-2 border flex items-center w-full">
+                                    <div>
+                                        <img draggable={false} src={m.img} className="w-10 h-10 rounded-lg" alt="" />
+                                    </div>
+                                    <div className="font-semibold px-3 truncate w-0 flex-grow text-left">{m.title}</div>
+                                    <div>
+                                        <Button onClick={() => addToCategory(m.id)} title="Add To Category" className="hover:bg-black hover:text-white"><PlusCircle /></Button>
+                                    </div>
                                 </div>
-                            </div>
-                    }
-
-                    {
-                        isOutsideMenuLoading && <LoaderComponent />
-                    }
-
-                    {
-                        !isOutsideMenuLoading && 
-                            <div className="w-full h-full flex flex-col relative z-0"> 
-                                <div className="w-full pb-2 border-b font-bold">
-                                    Not Added
-                                </div>
-                                
-                                <div className="w-full overflow-y-auto overflow-x-hidden flex-grow relative z-0">
-                                    {
-                                        positions && (outsideMenu || []).map((m, i) => 
-                                            <Draggable position={positions[i]} defaultClassNameDragging="shadow-lg z-50" defaultClassName="relative" onStop={(e, data) => handleStop(e, data, i)} key={i}>
-                                                <div className="bg-white p-2 border cursor-pointer flex items-center w-full">
-                                                    <div>
-                                                        <img src={m.img} className="w-10 h-10 rounded-lg" alt="" />
-                                                    </div>
-
-                                                    <div className="font-semibold px-3 truncate w-0 flex-grow text-left">
-                                                        {m.title}
-                                                    </div>
-                                                </div>
-                                            </Draggable>
-                                        )
-                                    }
-                                </div>
-                            </div>
-                    }
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </DialogContent>
         </Dialog>

@@ -5,4 +5,4 @@ export interface CategoryRequest {
 export interface UpdateCategoryRequest {
     name: string;
     id: string;
- }
+}
