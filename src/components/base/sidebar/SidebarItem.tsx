@@ -19,14 +19,15 @@ interface SidebarItemProps {
          title: string
          url: string
       }[]
-   }[]
+   }[],
+   title: string
 }
 
-export function SidebarItem({ items }: SidebarItemProps) {
+export function SidebarItem({ items, title }: SidebarItemProps) {
    return (
       <SidebarGroup>
-         <SidebarGroupLabel>Main</SidebarGroupLabel>
-         <SidebarMenu className="space-y-2">
+         <SidebarGroupLabel>{title}</SidebarGroupLabel>
+         <SidebarMenu className="space-y-1">
             {items.map((item) => {
                return (
                   <Collapsible

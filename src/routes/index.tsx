@@ -1,4 +1,7 @@
+import GuestRoute from "@/components/common/GuestRoute";
+import ProtectedRoute from "@/components/common/ProtectedRoute";
 import Dashboard from "@/Dashboard";
+import { LoginPage } from "@/pages/auth/login";
 import { IncomingOrderPage } from "@/pages/incoming-order";
 import { ManageCategoryPage } from "@/pages/manage-category";
 import { ManageMenuPage } from "@/pages/manage-menu";
@@ -12,8 +15,12 @@ const router = createBrowserRouter([
       element: <Navigate to='/admin/manage-qr' />,
    },
    {
+      path: '/auth/login',
+      element: <GuestRoute><LoginPage /></GuestRoute>,
+   },
+   {
       path: '/admin',
-      element: <Dashboard />,
+      element: <ProtectedRoute><Dashboard /></ProtectedRoute>,
       children: [
          {
             path: 'manage-qr',
@@ -33,6 +40,6 @@ const router = createBrowserRouter([
          }
       ]
    }
-])
+]);
 
 export default router
