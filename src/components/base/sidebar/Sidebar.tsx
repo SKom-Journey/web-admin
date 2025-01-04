@@ -40,7 +40,7 @@ const data = {
    auth: [
       {
          title: "Logout",
-         url: "/auth/logout",
+         url: "/logout",
          icon: LogOut,
          isActive: false,
       },

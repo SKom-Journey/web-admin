@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label"
 import Logo from "@/assets/logo/ryomu-logo.png";
 import { useLoginAdminStore } from "@/store/auth";
 import { FormEvent } from "react";
-import { useLoginAdmin } from "@/usecase/auth/login/use-login-admin";
+import { useLoginAdmin } from "@/usecase/auth/use-login-admin";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import storeSession from "@/utils/store_session";
