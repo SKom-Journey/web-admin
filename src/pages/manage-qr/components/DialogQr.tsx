@@ -1,8 +1,6 @@
 import {
    Dialog,
    DialogContent,
-   DialogHeader,
-   DialogTitle,
 } from "@/components/ui/dialog";
 import getMenuUrl from "@/utils/get-menu-url";
 import { QRCode } from "react-qrcode-logo";
