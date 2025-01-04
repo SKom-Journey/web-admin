@@ -1,7 +1,9 @@
+import Blank from "@/Blank";
 import GuestRoute from "@/components/common/GuestRoute";
 import ProtectedRoute from "@/components/common/ProtectedRoute";
 import Dashboard from "@/Dashboard";
-import { LoginPage } from "@/pages/auth/login";
+import { LoginPage } from "@/pages/auth/LoginPage";
+import { LogoutPage } from "@/pages/auth/LogoutPage";
 import { IncomingOrderPage } from "@/pages/incoming-order";
 import { ManageCategoryPage } from "@/pages/manage-category";
 import { ManageMenuPage } from "@/pages/manage-menu";
@@ -12,11 +14,27 @@ const router = createBrowserRouter([
    { path: "*", element: <div>404 Not Found</div> },
    {
       path: '/',
-      element: <Navigate to='/admin/manage-qr' />,
+      element: <Blank />,
+      children: [
+         {
+            path: '',
+            element: <Navigate to='/admin/manage-qr' />
+         },
+         {
+            path: 'logout',
+            element: <LogoutPage />
+         }
+      ]
    },
    {
-      path: '/auth/login',
-      element: <GuestRoute><LoginPage /></GuestRoute>,
+      path: '/auth',
+      element: <GuestRoute><Blank /></GuestRoute>,
+      children: [
+         {
+            path: 'login',
+            element: <LoginPage />
+         }
+      ]
    },
    {
       path: '/admin',

@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label"
 import Logo from "@/assets/logo/ryomu-logo.png";
 import { useLoginAdminStore } from "@/store/auth";
 import { FormEvent } from "react";
-import { useLoginAdmin } from "@/usecase/auth/login/use-login-admin";
+import { useLoginAdmin } from "@/usecase/auth/use-login-admin";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import storeSession from "@/utils/store_session";
@@ -48,7 +48,7 @@ export const LoginPage = () => {
             </div>
             <div className="flex flex-col space-y-1.5 mb-2">
                <Label className="text-gray-600 font-medium" htmlFor="password">Password</Label>
-               <Input id="password" onChange={(e) => setPassword(e.currentTarget.value)} placeholder="Input password" className="focus-visible:ring-0" />
+               <Input id="password" type="password" onChange={(e) => setPassword(e.currentTarget.value)} placeholder="Input password" className="focus-visible:ring-0" />
             </div>
             <Button title="Login" className="flex items-center gap-2 hover:bg-red-700 mt-3">
                Login
