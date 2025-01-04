@@ -13,18 +13,17 @@ const Http = axios.create({
 Http.interceptors.response.use(
    async (response) => {
        if(response.data.status == 'TOKEN_EXPIRED') {
-           const data = await refreshSessionToken();
-           if(data.access_token) {
+            const data = await refreshSessionToken();
+            if(data.access_token) {
                return Http(response.config);
-           } else {
-               toast.error('Session Invalid!');
-               clearSession();
-               location.href = '/auth/login';
-           }
+            }
+
+            toast.error('Session Invalid!');
+            await clearSession();
+            
        } else if(response.data.status == 'INVALID_TOKEN') {
            toast.error('Session Invalid!');
-           clearSession();
-           location.href = '/auth/login';
+           await clearSession();
        }
        return response;
    },

@@ -12,3 +12,10 @@ export interface ResfreshSession {
     type: string;
     created_at: string;
 }
+
+export interface Session {
+    id: string;
+    user_id: string;
+    type: string;
+    created_at: string;
+}
