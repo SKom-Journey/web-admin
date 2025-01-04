@@ -48,7 +48,7 @@ export const LoginPage = () => {
             </div>
             <div className="flex flex-col space-y-1.5 mb-2">
                <Label className="text-gray-600 font-medium" htmlFor="password">Password</Label>
-               <Input id="password" onChange={(e) => setPassword(e.currentTarget.value)} placeholder="Input password" className="focus-visible:ring-0" />
+               <Input id="password" type="password" onChange={(e) => setPassword(e.currentTarget.value)} placeholder="Input password" className="focus-visible:ring-0" />
             </div>
             <Button title="Login" className="flex items-center gap-2 hover:bg-red-700 mt-3">
                Login
