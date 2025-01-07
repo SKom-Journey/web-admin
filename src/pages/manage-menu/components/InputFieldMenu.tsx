@@ -53,6 +53,7 @@ export const InputFieldMenus = ({ onSubmit, onUpdate }: InputFieldMenusProps) =>
                <Input
                   placeholder="Input Price of Menu"
                   className="focus-visible:ring-none"
+                  type="number"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                />
