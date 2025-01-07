@@ -49,17 +49,9 @@ export const TabsOrder: React.FC<TabsOrderProps> = ({ orders, refetch }) => {
                         />
                      </TabsContent>
                      <TabsContent value="items">
-                        {order.items.map((item) => (
-                           <CardItems
-                              key={item.id}
-                              id={item.id}
-                              name={item.name ?? ""}
-                              note={item.note}
-                              img={item?.detail.img ?? ""}
-                              total={item.total}
-                              price={item.price ?? 0}
-                           />
-                        ))}
+                        <CardItems
+                           orders={order.items}
+                        />
                      </TabsContent>
                   </Tabs>
                </div>
