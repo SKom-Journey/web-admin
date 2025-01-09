@@ -2,14 +2,14 @@ import { create } from "zustand";
 
 interface MenuStore {
   title: string;
-  img: string;
+  img: string | File;
   price: string | number;
   description: string;
   showField: boolean;
   editMenu: { id: string, title: string; img: string; price: string | number; description: string } | null;
   toggleShowField: () => void;
   setTitle: (title: string) => void;
-  setImg: (img: string) => void;
+  setImg: (img: string | File) => void;
   setPrice: (price: string | number) => void;
   setDescription: (description: string) => void;
   resetForm: () => void;
