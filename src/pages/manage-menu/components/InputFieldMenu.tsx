@@ -4,8 +4,8 @@ import { useMenuStore } from "@/store/menu-store ";
 import { Check, X } from "lucide-react";
 
 interface InputFieldMenusProps {
-   onSubmit: () => void;
-   onUpdate: () => void;
+   onSubmit: (formData: FormData) => void;
+   onUpdate: (formData: FormData) => void;
 }
 
 export const InputFieldMenus = ({ onSubmit, onUpdate }: InputFieldMenusProps) => {
@@ -32,6 +32,24 @@ export const InputFieldMenus = ({ onSubmit, onUpdate }: InputFieldMenusProps) =>
       toggleShowField();
    };
 
+   const handleFormSubmit = () => {
+      const formData = new FormData();
+
+      formData.append("title", title);
+      formData.append("price", price as string);
+      formData.append("description", description);
+
+      if (typeof img === 'object' && img) {
+         formData.append("img", img);
+      }
+
+      if (isEditMode) {
+         onUpdate(formData);
+      } else {
+         onSubmit(formData);
+      }
+   };
+
    return (
       <div className="bg-white mb-3 flex gap-2">
          <div className="grid grid-rows-2 gap-2 w-full">
@@ -43,10 +61,12 @@ export const InputFieldMenus = ({ onSubmit, onUpdate }: InputFieldMenusProps) =>
                   onChange={(e) => setTitle(e.target.value)}
                />
                <Input
-                  placeholder="Input Img Url of Menu"
+                  type="file"
                   className="focus-visible:ring-none"
-                  value={img}
-                  onChange={(e) => setImg(e.target.value)}
+                  onChange={(e) => {
+                     const file = e.target.files?.[0];
+                     if (file) setImg(file);
+                  }}
                />
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -67,7 +87,7 @@ export const InputFieldMenus = ({ onSubmit, onUpdate }: InputFieldMenusProps) =>
             <div className="flex gap-1">
                <Button
                   className="bg-green-500 hover:bg-green-600 w-full"
-                  onClick={isEditMode ? onUpdate : onSubmit}
+                  onClick={handleFormSubmit}
                >
                   <Check />
                </Button>
