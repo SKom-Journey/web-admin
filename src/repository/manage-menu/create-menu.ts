@@ -11,7 +11,7 @@ export const createMenu = async (payload: MenusRequest): Promise<MenusRequest> =
          payload,
          {
             headers: {
-               "Content-Type": "application/json",
+               "Content-Type": "multipart/form-data",
             }
          }
       );
