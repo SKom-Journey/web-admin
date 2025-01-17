@@ -25,6 +25,8 @@ export const InputFieldMenus = ({ onSubmit, onUpdate }: InputFieldMenusProps) =>
    } = useMenuStore((state) => state);
 
    const isEditMode = Boolean(editMenu);
+   console.log(isEditMode);
+
 
    const handleCancel = () => {
       clearEditMenu();
@@ -50,6 +52,8 @@ export const InputFieldMenus = ({ onSubmit, onUpdate }: InputFieldMenusProps) =>
       }
    };
 
+   const imagePreviewUrl = img && typeof img !== 'string' ? URL.createObjectURL(img) : img;
+
    return (
       <div className="bg-white mb-3 flex gap-2">
          <div className="grid grid-rows-2 gap-2 w-full">
@@ -60,14 +64,25 @@ export const InputFieldMenus = ({ onSubmit, onUpdate }: InputFieldMenusProps) =>
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                />
-               <Input
-                  type="file"
-                  className="focus-visible:ring-none"
-                  onChange={(e) => {
-                     const file = e.target.files?.[0];
-                     if (file) setImg(file);
-                  }}
-               />
+               <div>
+                  <Input
+                     type="file"
+                     className="focus-visible:ring-none"
+                     onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) setImg(file);
+                     }}
+                  />
+                  {imagePreviewUrl && (
+                     <div className="col-span-2 mt-2">
+                        <img
+                           src={imagePreviewUrl}
+                           alt="Menu Preview"
+                           className="w-16 h-16 object-cover rounded border"
+                        />
+                     </div>
+                  )}
+               </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
                <Input

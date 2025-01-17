@@ -11,7 +11,7 @@ export const updateMenu = async (payload: MenusRequest, menu_id: string): Promis
          payload,
          {
             headers: {
-               "Content-Type": "application/json",
+               "Content-Type": "multipart/form-data",
             }
          }
       );
